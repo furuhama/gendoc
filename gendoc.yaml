@@ -1,0 +1,4 @@
+filename: test_<date>.txt
+body: |
+  hoge
+  fuga
