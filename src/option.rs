@@ -1,9 +1,9 @@
-pub struct DocumentOption {
+pub struct Option {
     pub filename: String,
     pub body: String,
 }
 
-impl DocumentOption {
+impl Option {
     pub fn convert(&mut self) {
         self.filename = Self::_convert_field(&self.filename);
         self.body = Self::_convert_field(&self.body);
@@ -11,14 +11,14 @@ impl DocumentOption {
 
     // private
     fn _convert_field(s: &str) -> String {
-        let result = DocumentOption::_convert_meta_tag(
+        let result = Self::_convert_meta_tag(
             "date",
             |s: &str| chrono::Local::today().format(s).to_string(),
             "%Y%m%d",
             s,
         );
 
-        let result = DocumentOption::_convert_meta_tag(
+        let result = Self::_convert_meta_tag(
             "datetime",
             |s: &str| chrono::Local::now().format(s).to_string(),
             "%Y%m%d%H%M%S",
@@ -60,27 +60,27 @@ mod tests {
     #[test]
     fn test_document_option_convert_field() {
         assert_eq!(
-            DocumentOption::_convert_field("without meta tag"),
+            Option::_convert_field("without meta tag"),
             "without meta tag"
         );
         assert_eq!(
-            DocumentOption::_convert_field("<date>"),
+            Option::_convert_field("<date>"),
             chrono::Local::today().format("%Y%m%d").to_string()
         );
         assert_eq!(
-            DocumentOption::_convert_field("<date:%Y-%m-%d>"),
+            Option::_convert_field("<date:%Y-%m-%d>"),
             chrono::Local::today().format("%Y-%m-%d").to_string()
         );
         assert_eq!(
-            DocumentOption::_convert_field("<datetime>"),
+            Option::_convert_field("<datetime>"),
             chrono::Local::now().format("%Y%m%d%H%M%S").to_string()
         );
         assert_eq!(
-            DocumentOption::_convert_field("<datetime:%Y-%m-%d-%H%M%S>"),
+            Option::_convert_field("<datetime:%Y-%m-%d-%H%M%S>"),
             chrono::Local::now().format("%Y-%m-%d-%H%M%S").to_string()
         );
         assert_eq!(
-            DocumentOption::_convert_field("<date:%Y-%m-%d><datetime:%Y-%m-%d-%H%M%S>"),
+            Option::_convert_field("<date:%Y-%m-%d><datetime:%Y-%m-%d-%H%M%S>"),
             format!(
                 "{}{}",
                 chrono::Local::today().format("%Y-%m-%d").to_string(),

@@ -1,18 +1,18 @@
-use crate::document_option::DocumentOption;
+use crate::option::Option;
 use std::fs::OpenOptions;
 use std::io::prelude::*;
 
-pub fn generate(document_option: &DocumentOption) {
+pub fn generate(option: &Option) {
     let mut file = OpenOptions::new()
         .write(true)
         .create_new(true)
-        .open(&document_option.filename)
+        .open(&option.filename)
         .expect(&format!(
             "target filename {} already exists",
-            document_option.filename
+            option.filename
         ));
 
-    file.write_all(document_option.body.as_bytes()).unwrap();
+    file.write_all(option.body.as_bytes()).unwrap();
 
-    println!("Document generated: {}", document_option.filename);
+    println!("Document generated: {}", option.filename);
 }

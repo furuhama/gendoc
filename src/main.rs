@@ -1,9 +1,9 @@
 use gendoc::*;
 
 fn main() {
-    let mut document_option = parser::parse_option();
+    let mut option = parser::parse_option();
 
-    document_option.convert();
+    option.convert();
 
-    generator::generate(&document_option);
+    generator::generate(&option);
 }

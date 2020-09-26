@@ -1,8 +1,8 @@
-use crate::document_option::DocumentOption;
+use crate::option::Option;
 use std::fs::File;
 use std::io::prelude::*;
 
-pub fn parse_option() -> DocumentOption {
+pub fn parse_option() -> Option {
     let mut template_file = File::open("./gendoc.yaml").expect("gendoc.yaml is not found");
     let mut contents = String::new();
 
@@ -21,7 +21,7 @@ pub fn parse_option() -> DocumentOption {
         option_map = serde_yaml::from_str(&contents).unwrap();
     };
 
-    DocumentOption {
+    Option {
         filename: option_map.get("filename").unwrap().to_owned(),
         body: option_map.get("body").unwrap().to_owned(),
     }
