@@ -8,15 +8,16 @@ struct DocumentOption {
 
 impl DocumentOption {
     fn convert(&mut self) {
-        let conv = |s: &str| -> String {
-            s.replace(
-                "<date>",
-                &chrono::Local::today().format("%Y%m%d").to_string(),
-            )
-        };
+        self.filename = Self::_convert_field(&self.filename);
+        self.body = Self::_convert_field(&self.body);
+    }
 
-        self.filename = conv(&self.filename);
-        self.body = conv(&self.body);
+    // private
+    fn _convert_field(s: &str) -> String {
+        s.replace(
+            "<date>",
+            &chrono::Local::today().format("%Y%m%d").to_string(),
+        )
     }
 }
 
