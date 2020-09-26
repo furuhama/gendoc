@@ -8,15 +8,23 @@ Run `gendoc` with `gendoc.yaml` file
 
 ```
 $ cat gendoc.yaml
-filename: test_<date>.txt
+filename: test_<datetime>.rb
 body: |
-  hoge
-  fuga
+  # frozen_string_literal: true
+
+  require 'json'
+
+  puts JSON.parse("{}")
 $ gendoc
-Document generated: test_20200926.txt
-$ cat test_20200926.txt
-hoge
-fuga
+Document generated: ./test_20200927023752.rb
+$ cat test_20200927023752.rb
+# frozen_string_literal: true
+
+require 'json'
+
+puts JSON.parse("{}")
+$ ruby test_20200927023752.rb
+{}
 ```
 
 ### Settings
