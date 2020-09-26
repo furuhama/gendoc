@@ -19,6 +19,16 @@ hoge
 fuga
 ```
 
+### Settings
+
+There are some setting parameters.
+
+| parameter | info | required |
+| --- | --- | --- |
+| `filename` | A filename of a generated document. | ○ |
+| `body` | A body of a generated document. | ○ |
+| `dir` | A directory of a generated document. It will be parsed as a relative path. (ex: `tmp` -> `./tmp`) `gendoc` does NOT create a new directory on generation time. | |
+
 ### Meta tags
 
 There are some meta tags which are converted on generation time.
