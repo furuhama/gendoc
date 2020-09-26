@@ -74,18 +74,11 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_document_option_convert() {
-        let mut document_option = DocumentOption {
-            filename: "<date>".to_owned(),
-            body: "body".to_owned(),
-        };
-
-        document_option.convert();
-
+    fn test_document_option_convert_field() {
         assert_eq!(
-            document_option.filename,
+            DocumentOption::_convert_field("<date>"),
             chrono::Local::today().format("%Y%m%d").to_string()
         );
-        assert_eq!(document_option.body, "body");
+        assert_eq!(DocumentOption::_convert_field("body"), "body");
     }
 }
