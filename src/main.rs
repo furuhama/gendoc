@@ -31,6 +31,7 @@ impl DocumentOption {
         result
     }
 
+    // private
     fn _convert_meta_tag<F>(tag_name: &str, formatter: F, default_arg: &str, s: &str) -> String
     where
         F: Fn(&str) -> String,
