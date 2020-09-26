@@ -21,6 +21,13 @@ impl DocumentOption {
             s,
         );
 
+        let result = DocumentOption::_convert_meta_tag(
+            "datetime",
+            |s: &str| chrono::Local::now().format(s).to_string(),
+            "%Y%m%d%H%M%S",
+            &result,
+        );
+
         result
     }
 
@@ -112,6 +119,14 @@ mod tests {
         assert_eq!(
             DocumentOption::_convert_field("<date:%Y-%m-%d>"),
             chrono::Local::today().format("%Y-%m-%d").to_string()
+        );
+        assert_eq!(
+            DocumentOption::_convert_field("<datetime>"),
+            chrono::Local::now().format("%Y%m%d%H%M%S").to_string()
+        );
+        assert_eq!(
+            DocumentOption::_convert_field("<datetime:%Y-%m-%d-%H%M%S>"),
+            chrono::Local::now().format("%Y-%m-%d-%H%M%S").to_string()
         );
     }
 }
