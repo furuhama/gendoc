@@ -7,17 +7,19 @@ pub fn generate(option: &Option) {
     if !Path::new(&option.dir).exists() {
         panic!("target directory {} does not exist", option.dir);
     }
-    if Path::new(&option.path()).exists() {
-        panic!("target file {} already exists", option.path());
+
+    let path = option.path();
+    if Path::new(&path).exists() {
+        panic!("target file {} already exists", path);
     }
 
     let mut file = OpenOptions::new()
         .write(true)
         .create_new(true)
-        .open(&option.path())
+        .open(&path)
         .unwrap();
 
     file.write_all(option.body.as_bytes()).unwrap();
 
-    println!("Document generated: {}", option.path());
+    println!("Document generated: {}", path);
 }
