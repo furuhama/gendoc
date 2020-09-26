@@ -27,7 +27,7 @@ There are some setting parameters.
 | :---: | --- | :---: |
 | `filename` | A filename of a generated document. | ○ |
 | `body` | A body of a generated document. | ○ |
-| `dir` | A directory of a generated document. It will be parsed as a relative path. (ex: `tmp` -> `./tmp`) `gendoc` does NOT create a new directory on generation time. | |
+| `dir` | A directory of a generated document. It will be parsed as a relative path (ex: `tmp` -> `./tmp`). `gendoc` does NOT create a new directory on generation time. | |
 
 ### Meta tags
 
