@@ -1,8 +1,8 @@
-## gendoc
+# gendoc
 
 Simple document generator with template yaml file
 
-### Usage
+## Usage
 
 Run `gendoc` with `gendoc.yaml` file
 
