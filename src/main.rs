@@ -21,27 +21,36 @@ impl DocumentOption {
 }
 
 fn main() {
+    let mut document_option = parse_option();
+
+    document_option.convert();
+
+    generate(&document_option);
+}
+
+fn parse_option() -> DocumentOption {
     let mut template_file = File::open("./gendoc.yaml").expect("gendoc.yaml is not found");
     let mut contents = String::new();
 
     template_file.read_to_string(&mut contents).unwrap();
 
-    let template_map: std::collections::BTreeMap<String, String> =
-        serde_yaml::from_str(&contents).unwrap();
+    let option_map: std::collections::BTreeMap<String, String>;
 
-    let filename = template_map.get("filename").unwrap();
-    let body = template_map.get("body").unwrap();
+    if let Some(kind) = std::env::args().nth(1) {
+        let template_map: std::collections::BTreeMap<
+            String,
+            std::collections::BTreeMap<String, String>,
+        > = serde_yaml::from_str(&contents).unwrap();
 
-    let mut document_option = DocumentOption {
-        filename: filename.to_owned(),
-        body: body.to_owned(),
+        option_map = template_map.get(&kind).unwrap().clone();
+    } else {
+        option_map = serde_yaml::from_str(&contents).unwrap();
     };
 
-    document_option.convert();
-
-    generate(&document_option);
-
-    println!("Document generated: {}", filename);
+    DocumentOption {
+        filename: option_map.get("filename").unwrap().to_owned(),
+        body: option_map.get("body").unwrap().to_owned(),
+    }
 }
 
 fn generate(document_option: &DocumentOption) {
@@ -55,4 +64,6 @@ fn generate(document_option: &DocumentOption) {
         ));
 
     file.write_all(document_option.body.as_bytes()).unwrap();
+
+    println!("Document generated: {}", document_option.filename);
 }
