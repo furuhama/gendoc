@@ -21,11 +21,16 @@ fuga
 
 ### Meta tags
 
-There are some meta tags which are converted on generation time
+There are some meta tags which are converted on generation time.
 
 | meta tag | info |
 | --- | --- |
-| `<date>` | Converted to formatted date. Format is YYYYMMDD. (Example: 20201025) |
+| `<date>` | Converted to formatted date. Format is `YYYYmmdd`. (ex: `<date>` -> `19720719`) |
+| `<date:_format_string_>` | Same as `<date>`, and you can pass an format string. (ex: `<date:%Y-%m-%d>` -> `1972-07-19`) |
+| `<datetime>` | Converted to formatted datetime. Format is `YYYYmmddHHMMSS`. (ex: `<datetime>` -> `19720719000545`) |
+| `<datetime:_format_string_>` | Same as `<datetime>`, and you can pass an format string. (ex: `<datetime:%Y-%m-%d-%H%M%S>` -> `1972-07-19-000545`) |
+
+To get more info abount format string, see [here](https://docs.rs/chrono/latest/chrono/format/strftime/index.html).
 
 ### Multiple settings
 
