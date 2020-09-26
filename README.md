@@ -24,7 +24,7 @@ fuga
 There are some setting parameters.
 
 | parameter | info | required |
-| --- | --- | --- |
+| :---: | --- | :---: |
 | `filename` | A filename of a generated document. | ○ |
 | `body` | A body of a generated document. | ○ |
 | `dir` | A directory of a generated document. It will be parsed as a relative path. (ex: `tmp` -> `./tmp`) `gendoc` does NOT create a new directory on generation time. | |
@@ -34,7 +34,7 @@ There are some setting parameters.
 There are some meta tags which are converted on generation time.
 
 | meta tag | info |
-| --- | --- |
+| :---: | --- |
 | `<date>` | Converted to formatted date. Format is `YYYYmmdd`. (ex: `<date>` -> `19720719`) |
 | `<date:_format_string_>` | Same as `<date>`, and you can pass an format string. (ex: `<date:%Y-%m-%d>` -> `1972-07-19`) |
 | `<datetime>` | Converted to formatted datetime. Format is `YYYYmmddHHMMSS`. (ex: `<datetime>` -> `19720719000545`) |
