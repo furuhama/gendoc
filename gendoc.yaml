@@ -1,4 +1,5 @@
-filename: test_<date>.txt
-body: |
-  hoge
-  fuga
+sample:
+  filename: test_<date>.txt
+  body: |
+    hoge
+    fuga
