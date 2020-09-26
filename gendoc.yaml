@@ -4,3 +4,11 @@ sample:
   body: |
     hoge
     fuga
+ruby:
+  filename: <datetime>.rb
+  body: |
+    # frozen_string_literal: true
+
+    require 'json'
+
+    puts JSON.parse("{}")
