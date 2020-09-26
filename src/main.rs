@@ -8,15 +8,15 @@ struct DocumentOption {
 
 impl DocumentOption {
     fn convert(&mut self) {
-        let conv = |s: &str| {
+        let conv = |s: &str| -> String {
             s.replace(
                 "<date>",
                 &chrono::Local::today().format("%Y%m%d").to_string(),
             )
         };
 
-        conv(&mut self.filename);
-        conv(&mut self.body);
+        self.filename = conv(&self.filename);
+        self.body = conv(&self.body);
     }
 }
 
@@ -66,4 +66,25 @@ fn generate(document_option: &DocumentOption) {
     file.write_all(document_option.body.as_bytes()).unwrap();
 
     println!("Document generated: {}", document_option.filename);
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_document_option_convert() {
+        let mut document_option = DocumentOption {
+            filename: "<date>".to_owned(),
+            body: "body".to_owned(),
+        };
+
+        document_option.convert();
+
+        assert_eq!(
+            document_option.filename,
+            chrono::Local::today().format("%Y%m%d").to_string()
+        );
+        assert_eq!(document_option.body, "body");
+    }
 }
