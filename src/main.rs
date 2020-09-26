@@ -14,10 +14,36 @@ impl DocumentOption {
 
     // private
     fn _convert_field(s: &str) -> String {
-        s.replace(
-            "<date>",
-            &chrono::Local::today().format("%Y%m%d").to_string(),
-        )
+        let result = DocumentOption::_convert_meta_tag(
+            "date",
+            |s: &str| chrono::Local::today().format(s).to_string(),
+            "%Y%m%d",
+            s,
+        );
+
+        result
+    }
+
+    fn _convert_meta_tag<F>(tag_name: &str, formatter: F, default_arg: &str, s: &str) -> String
+    where
+        F: Fn(&str) -> String,
+    {
+        let mut result = s.replace(&format!("<{}>", tag_name), &formatter(default_arg));
+
+        let re = regex::Regex::new(&format!("<{}:.*>", tag_name)).unwrap();
+
+        if let Some(caps) = re.captures(&result.clone()) {
+            for cap in caps.iter() {
+                if let Some(c) = cap {
+                    let matched_str = c.as_str();
+                    let format_pattern = &matched_str[tag_name.len() + 2..matched_str.len() - 1];
+
+                    result.replace_range(c.range(), &formatter(format_pattern));
+                }
+            }
+        };
+
+        result
     }
 }
 
@@ -76,9 +102,16 @@ mod tests {
     #[test]
     fn test_document_option_convert_field() {
         assert_eq!(
+            DocumentOption::_convert_field("without meta tag"),
+            "without meta tag"
+        );
+        assert_eq!(
             DocumentOption::_convert_field("<date>"),
             chrono::Local::today().format("%Y%m%d").to_string()
         );
-        assert_eq!(DocumentOption::_convert_field("body"), "body");
+        assert_eq!(
+            DocumentOption::_convert_field("<date:%Y-%m-%d>"),
+            chrono::Local::today().format("%Y-%m-%d").to_string()
+        );
     }
 }
