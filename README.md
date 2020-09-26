@@ -1,5 +1,10 @@
 # gendoc
 
+[![gendoc on crates.io][cratesio-image]][cratesio]
+
+[cratesio-image]: https://img.shields.io/crates/v/gendoc.svg
+[cratesio]: https://crates.io/crates/gendoc
+
 Simple document generator with template yaml file
 
 ## Usage
