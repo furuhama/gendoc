@@ -1,5 +1,5 @@
 use crate::option::Option;
-use std::collections::BTreeMap;
+use std::collections::HashMap;
 use std::fs::File;
 use std::io::prelude::*;
 
@@ -9,10 +9,10 @@ pub fn parse_option() -> Option {
 
     template_file.read_to_string(&mut contents).unwrap();
 
-    let option_map: BTreeMap<String, String>;
+    let option_map: HashMap<String, String>;
 
     if let Some(kind) = std::env::args().nth(1) {
-        let template_map: BTreeMap<String, BTreeMap<String, String>> =
+        let template_map: HashMap<String, HashMap<String, String>> =
             serde_yaml::from_str(&contents).unwrap();
 
         option_map = template_map.get(&kind).unwrap().clone();
