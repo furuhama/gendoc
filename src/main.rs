@@ -37,7 +37,8 @@ impl DocumentOption {
     {
         let mut result = s.replace(&format!("<{}>", tag_name), &formatter(default_arg));
 
-        let re = regex::Regex::new(&format!("<{}:.*>", tag_name)).unwrap();
+        // `.*?` is a shortest match
+        let re = regex::Regex::new(&format!("<{}:.*?>", tag_name)).unwrap();
 
         if let Some(caps) = re.captures(&result.clone()) {
             for cap in caps.iter() {
@@ -127,6 +128,14 @@ mod tests {
         assert_eq!(
             DocumentOption::_convert_field("<datetime:%Y-%m-%d-%H%M%S>"),
             chrono::Local::now().format("%Y-%m-%d-%H%M%S").to_string()
+        );
+        assert_eq!(
+            DocumentOption::_convert_field("<date:%Y-%m-%d><datetime:%Y-%m-%d-%H%M%S>"),
+            format!(
+                "{}{}",
+                chrono::Local::today().format("%Y-%m-%d").to_string(),
+                chrono::Local::now().format("%Y-%m-%d-%H%M%S").to_string()
+            )
         );
     }
 }
