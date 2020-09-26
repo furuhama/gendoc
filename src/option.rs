@@ -1,12 +1,18 @@
 pub struct Option {
     pub filename: String,
     pub body: String,
+    pub dir: String,
 }
 
 impl Option {
+    pub fn path(&self) -> String {
+        format!("{}{}", self.dir, self.filename)
+    }
+
     pub fn convert(&mut self) {
         self.filename = Self::_convert_field(&self.filename);
         self.body = Self::_convert_field(&self.body);
+        self.dir = Self::_convert_field(&self.dir);
     }
 
     // private

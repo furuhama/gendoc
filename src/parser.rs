@@ -24,5 +24,9 @@ pub fn parse_option() -> Option {
     Option {
         filename: option_map.get("filename").unwrap().to_owned(),
         body: option_map.get("body").unwrap().to_owned(),
+        dir: match option_map.get("dir") {
+            Some(s) => format!("./{}/", s),
+            None => "./".to_owned(),
+        },
     }
 }
