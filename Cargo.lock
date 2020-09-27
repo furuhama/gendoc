@@ -10,6 +10,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "anyhow"
+version = "1.0.32"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6b602bfe940d21c130f3895acd65221e8a61270debe89d628b9cb4e3ccb8569b"
+
+[[package]]
 name = "autocfg"
 version = "1.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -36,6 +42,7 @@ checksum = "134951f4028bdadb9b84baf4232681efbf277da25144b9b0ad65df75946c422b"
 name = "gendoc"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "chrono",
  "regex",
  "serde",

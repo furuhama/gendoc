@@ -81,5 +81,4 @@ this is a 2nd setting
 
 ### TODO
 
-- [ ] panic handling
-- [ ] `<input>` meta tag
+- `<input>` meta tag

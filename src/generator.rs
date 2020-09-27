@@ -1,25 +1,32 @@
 use crate::option::Option;
+use anyhow::{format_err, Context, Result};
 use std::fs::OpenOptions;
 use std::io::prelude::*;
 use std::path::Path;
 
-pub fn generate(option: &Option) {
+pub fn generate(option: &Option) -> Result<()> {
     if !Path::new(&option.dir).exists() {
-        panic!("target directory {} does not exist", option.dir);
+        return Err(format_err!(
+            "target directory {} does not exist",
+            option.dir
+        ));
     }
 
     let path = option.path();
     if Path::new(&path).exists() {
-        panic!("target file {} already exists", path);
+        return Err(format_err!("target file {} already exists", path));
     }
 
     let mut file = OpenOptions::new()
         .write(true)
         .create_new(true)
         .open(&path)
-        .unwrap();
+        .with_context(|| "Unexpected error while creating a document file")?;
 
-    file.write_all(option.body.as_bytes()).unwrap();
+    file.write_all(option.body.as_bytes())
+        .with_context(|| "Unexpected error while writing a document file")?;
 
     println!("Document generated: {}", path);
+
+    Ok(())
 }
