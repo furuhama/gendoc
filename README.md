@@ -1,6 +1,7 @@
 # gendoc
 
 [![gendoc on crates.io][cratesio-image]][cratesio]
+![Rust](https://github.com/furuhama/competitive/workflows/Rust/badge.svg)
 
 [cratesio-image]: https://img.shields.io/crates/v/gendoc.svg
 [cratesio]: https://crates.io/crates/gendoc
