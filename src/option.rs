@@ -1,3 +1,5 @@
+use std::io::{self, BufRead, Write};
+
 pub struct Option {
     pub filename: String,
     pub body: String,
@@ -47,6 +49,27 @@ impl Option {
             "datetime",
             |s: &str| chrono::Local::now().format(s).to_string(),
             "%Y%m%d%H%M%S",
+            &result,
+        );
+
+        // TODO: Make this testable
+        let result = Self::convert_meta_tag(
+            "input",
+            |_| {
+                let mut buf = String::new();
+                let stdin = io::stdin();
+
+                // flush buffer synchronously
+                let mut stdout = io::stdout();
+                stdout.write_all(b"input> ").unwrap();
+                stdout.flush().unwrap();
+
+                stdin.lock().read_line(&mut buf).unwrap();
+
+                // trim newline from buf
+                buf.trim().to_owned()
+            },
+            "", // unused
             &result,
         );
 

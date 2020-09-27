@@ -53,6 +53,7 @@ There are some meta tags which are converted on generation time.
 | `<date:_format_string_>` | Same as `<date>`, and you can pass an format string. (ex: `<date:%Y-%m-%d>` -> `1972-07-19`) |
 | `<datetime>` | Converted to formatted datetime. Format is `YYYYmmddHHMMSS`. (ex: `<datetime>` -> `19720719000545`) |
 | `<datetime:_format_string_>` | Same as `<datetime>`, and you can pass an format string. (ex: `<datetime:%Y-%m-%d-%H%M%S>` -> `1972-07-19-000545`) |
+| `<input>` | Converted to input text. You should pass text from STDIN on generation time. |
 
 To get more info abount format string, see [here](https://docs.rs/chrono/latest/chrono/format/strftime/index.html).
 
@@ -82,4 +83,4 @@ this is a 2nd setting
 
 ### TODO
 
-- `<input>` meta tag
+- Be able to set argument to `<input>` tag. (`<input>` with the same argument will be filled with the same value.)
