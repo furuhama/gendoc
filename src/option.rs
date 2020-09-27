@@ -6,6 +6,8 @@ pub struct Option {
 }
 
 impl Option {
+    pub const CONFIG_FILENAME: &'static str = "gendoc.yaml";
+
     pub fn new(filename: String, body: String, dir: std::option::Option<&String>) -> Self {
         let dir = match dir {
             Some(s) => format!("./{}/", s),
