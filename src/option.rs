@@ -24,9 +24,15 @@ impl Option {
     }
 
     pub fn convert(&mut self) {
-        self.filename = Self::convert_field(&self.filename);
-        self.body = Self::convert_field(&self.body);
-        self.dir = Self::convert_field(&self.dir);
+        let filename = Self::convert_field(&self.filename);
+        let body = Self::convert_field(&self.body);
+        let dir = Self::convert_field(&self.dir);
+        let path = format!("{}{}", dir, filename);
+
+        self.filename = filename;
+        self.body = body;
+        self.dir = dir;
+        self.path = path;
     }
 
     fn convert_field(s: &str) -> String {
