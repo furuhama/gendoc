@@ -78,3 +78,8 @@ Document generated: sample2.txt
 $ cat sample2.txt
 this is a 2nd setting
 ```
+
+### TODO
+
+- [ ] panic handling
+- [ ] `<input>` meta tag
