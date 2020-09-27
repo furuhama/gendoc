@@ -57,7 +57,12 @@ impl Option {
     where
         F: Fn(&str) -> String,
     {
-        let mut result = s.replace(&format!("<{}>", tag_name), &formatter(default_arg));
+        let pattern = &format!("<{}>", tag_name);
+        let mut result = match s.contains(pattern) {
+            // call formatter only when string contains pattern
+            true => s.replace(pattern, &formatter(default_arg)),
+            false => s.to_owned(),
+        };
 
         // `.*?` is a shortest match
         let re = regex::Regex::new(&format!("<{}:.*?>", tag_name)).unwrap();
