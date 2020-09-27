@@ -15,7 +15,6 @@ impl Option {
         self.dir = Self::_convert_field(&self.dir);
     }
 
-    // private
     fn _convert_field(s: &str) -> String {
         let result = Self::_convert_meta_tag(
             "date",
@@ -34,7 +33,6 @@ impl Option {
         result
     }
 
-    // private
     fn _convert_meta_tag<F>(tag_name: &str, formatter: F, default_arg: &str, s: &str) -> String
     where
         F: Fn(&str) -> String,
