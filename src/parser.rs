@@ -29,14 +29,11 @@ pub fn parse_option() -> Result<Option> {
             .with_context(|| "Unexpected error while parsing gendoc.yaml")?;
     };
 
-    Ok(Option {
-        filename: read_option(&option_map, "filename")?,
-        body: read_option(&option_map, "body")?,
-        dir: match option_map.get("dir") {
-            Some(s) => format!("./{}/", s),
-            None => "./".to_owned(),
-        },
-    })
+    Ok(Option::new(
+        read_option(&option_map, "filename")?,
+        read_option(&option_map, "body")?,
+        option_map.get("dir"),
+    ))
 }
 
 fn read_option(option_map: &HashMap<String, String>, field: &str) -> Result<String> {

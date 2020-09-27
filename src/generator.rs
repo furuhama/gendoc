@@ -12,21 +12,20 @@ pub fn generate(option: &Option) -> Result<()> {
         ));
     }
 
-    let path = option.path();
-    if Path::new(&path).exists() {
-        return Err(format_err!("target file {} already exists", path));
+    if Path::new(&option.path).exists() {
+        return Err(format_err!("target file {} already exists", option.path));
     }
 
     let mut file = OpenOptions::new()
         .write(true)
         .create_new(true)
-        .open(&path)
+        .open(&option.path)
         .with_context(|| "Unexpected error while creating a document file")?;
 
     file.write_all(option.body.as_bytes())
         .with_context(|| "Unexpected error while writing a document file")?;
 
-    println!("Document generated: {}", path);
+    println!("Document generated: {}", option.path);
 
     Ok(())
 }

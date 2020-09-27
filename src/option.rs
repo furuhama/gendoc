@@ -2,11 +2,23 @@ pub struct Option {
     pub filename: String,
     pub body: String,
     pub dir: String,
+    pub path: String,
 }
 
 impl Option {
-    pub fn path(&self) -> String {
-        format!("{}{}", self.dir, self.filename)
+    pub fn new(filename: String, body: String, dir: std::option::Option<&String>) -> Self {
+        let dir = match dir {
+            Some(s) => format!("./{}/", s),
+            None => "./".to_owned(),
+        };
+        let path = format!("{}{}", dir, filename);
+
+        Self {
+            filename,
+            body,
+            dir,
+            path,
+        }
     }
 
     pub fn convert(&mut self) {
@@ -60,6 +72,29 @@ impl Option {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_option_new() {
+        let option = Option::new("filename".to_owned(), "body".to_owned(), None);
+        assert_eq!(option.dir, "./");
+        assert_eq!(option.path, "./filename");
+
+        let option = Option::new(
+            "filename".to_owned(),
+            "body".to_owned(),
+            Some(&"dir".to_owned()),
+        );
+        assert_eq!(option.dir, "./dir/");
+        assert_eq!(option.path, "./dir/filename");
+
+        let option = Option::new(
+            "filename".to_owned(),
+            "body".to_owned(),
+            Some(&"dir/dir2".to_owned()),
+        );
+        assert_eq!(option.dir, "./dir/dir2/");
+        assert_eq!(option.path, "./dir/dir2/filename");
+    }
 
     #[test]
     fn test_option_convert_field() {
