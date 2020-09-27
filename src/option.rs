@@ -62,7 +62,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_document_option_convert_field() {
+    fn test_option_convert_field() {
         let pair = [
             ("without meta tag", "without meta tag"),
             (
