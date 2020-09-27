@@ -11,4 +11,4 @@ ruby:
 
     require 'json'
 
-    puts JSON.parse("<input>")
+    puts JSON.parse("{\"<input>\":\"<date>\"}")

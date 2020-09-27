@@ -40,15 +40,15 @@ impl Option {
     fn convert_field(s: &str) -> String {
         let result = Self::convert_meta_tag(
             "date",
-            |s: &str| chrono::Local::today().format(s).to_string(),
-            "%Y%m%d",
+            |s: std::option::Option<&str>| chrono::Local::today().format(s.unwrap()).to_string(),
+            Some("%Y%m%d"),
             s,
         );
 
         let result = Self::convert_meta_tag(
             "datetime",
-            |s: &str| chrono::Local::now().format(s).to_string(),
-            "%Y%m%d%H%M%S",
+            |s: std::option::Option<&str>| chrono::Local::now().format(s.unwrap()).to_string(),
+            Some("%Y%m%d%H%M%S"),
             &result,
         );
 
@@ -69,16 +69,21 @@ impl Option {
                 // trim newline from buf
                 buf.trim().to_owned()
             },
-            "", // unused
+            None,
             &result,
         );
 
         result
     }
 
-    fn convert_meta_tag<F>(tag_name: &str, formatter: F, default_arg: &str, s: &str) -> String
+    fn convert_meta_tag<F>(
+        tag_name: &str,
+        formatter: F,
+        default_arg: std::option::Option<&str>,
+        s: &str,
+    ) -> String
     where
-        F: Fn(&str) -> String,
+        F: Fn(std::option::Option<&str>) -> String,
     {
         let pattern = &format!("<{}>", tag_name);
         let mut result = match s.contains(pattern) {
@@ -96,7 +101,7 @@ impl Option {
                     let matched_str = c.as_str();
                     let format_pattern = &matched_str[tag_name.len() + 2..matched_str.len() - 1];
 
-                    result.replace_range(c.range(), &formatter(format_pattern));
+                    result.replace_range(c.range(), &formatter(Some(format_pattern)));
                 }
             }
         };
